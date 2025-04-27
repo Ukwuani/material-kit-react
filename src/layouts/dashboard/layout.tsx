@@ -1,15 +1,22 @@
 import type { Breakpoint } from '@mui/material/styles';
 
+import React from 'react';
 import { merge } from 'es-toolkit';
 import { useBoolean } from 'minimal-shared/hooks';
 
 import Box from '@mui/material/Box';
+import Tabs from '@mui/material/Tabs';
+import LinkTab from '@mui/material/Tab';
 import Alert from '@mui/material/Alert';
 import { useTheme } from '@mui/material/styles';
 
+import { usePathname } from 'src/routes/hooks';
+
 import { _langs, _notifications } from 'src/_mock';
 
-import { NavMobile, NavDesktop } from './nav';
+import { Logo } from 'src/components/logo';
+
+import { NavDesktop } from './nav';
 import { layoutClasses } from '../core/classes';
 import { _account } from '../nav-config-account';
 import { dashboardLayoutVars } from './css-vars';
@@ -17,7 +24,6 @@ import { navData } from '../nav-config-dashboard';
 import { MainSection } from '../core/main-section';
 import { Searchbar } from '../components/searchbar';
 import { _workspaces } from '../nav-config-workspace';
-import { MenuButton } from '../components/menu-button';
 import { HeaderSection } from '../core/header-section';
 import { LayoutSection } from '../core/layout-section';
 import { AccountPopover } from '../components/account-popover';
@@ -50,6 +56,7 @@ export function DashboardLayout({
   const theme = useTheme();
 
   const { value: open, onFalse: onClose, onTrue: onOpen } = useBoolean();
+  const pathname = usePathname();
 
   const renderHeader = () => {
     const headerSlotProps: HeaderSectionProps['slotProps'] = {
@@ -57,6 +64,8 @@ export function DashboardLayout({
         maxWidth: false,
       },
     };
+
+    // const navTabs: any = 
 
     const headerSlots: HeaderSectionProps['slots'] = {
       topArea: (
@@ -66,12 +75,13 @@ export function DashboardLayout({
       ),
       leftArea: (
         <>
+        <Logo />
           {/** @slot Nav mobile */}
-          <MenuButton
+          {/* <MenuButton
             onClick={onOpen}
             sx={{ mr: 1, ml: -1, [theme.breakpoints.up(layoutQuery)]: { display: 'none' } }}
           />
-          <NavMobile data={navData} open={open} onClose={onClose} workspaces={_workspaces} />
+          <NavMobile data={navData} open={open} onClose={onClose} workspaces={_workspaces} /> */}
         </>
       ),
       rightArea: (
@@ -89,6 +99,25 @@ export function DashboardLayout({
           <AccountPopover data={_account} />
         </Box>
       ),
+      bottomArea: (
+        <Tabs
+          value={pathname}
+          variant="scrollable"
+          scrollButtons="auto"
+          aria-label="scrollable auto tabs example"
+          role="navigation"
+          >
+        
+          { navData.map((item, id) => 
+            <LinkTab 
+            label={item.title}
+            href={item.path}
+            value={item.path}
+
+             />
+          )}
+        </Tabs>
+      )
     };
 
     return (
@@ -116,9 +145,9 @@ export function DashboardLayout({
       /** **************************************
        * @Sidebar
        *************************************** */
-      sidebarSection={
-        <NavDesktop data={navData} layoutQuery={layoutQuery} workspaces={_workspaces} />
-      }
+      // sidebarSection={
+      //   <NavDesktop data={navData} layoutQuery={layoutQuery} workspaces={_workspaces} />
+      // }
       /** **************************************
        * @Footer
        *************************************** */

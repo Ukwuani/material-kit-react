@@ -47,6 +47,12 @@ declare module '@mui/material/styles' {
   interface TypographyVariantsOptions extends Partial<FontStyleExtend> {}
 }
 
+declare module '@mui/material/Button' {
+  interface ButtonPropsColorOverrides {
+    grey: true;
+  }
+}
+
 declare module '@mui/material/styles' {
   /**
    * Custom shadows

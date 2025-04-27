@@ -36,7 +36,7 @@ export function SignInView() {
         fullWidth
         name="email"
         label="Email address"
-        defaultValue="hello@gmail.com"
+        defaultValue=""
         sx={{ mb: 3 }}
         slotProps={{
           inputLabel: { shrink: true },
@@ -51,7 +51,7 @@ export function SignInView() {
         fullWidth
         name="password"
         label="Password"
-        defaultValue="@demo1234"
+        defaultValue=""
         type={showPassword ? 'text' : 'password'}
         slotProps={{
           inputLabel: { shrink: true },
@@ -121,7 +121,21 @@ export function SignInView() {
           justifyContent: 'center',
         }}
       >
-        <IconButton color="inherit">
+        <Button
+        fullWidth
+        size="large"
+        color="grey"
+        type="submit"
+        variant="outlined"
+        onClick={handleSignIn}
+        tabIndex={-1}
+        startIcon={<Iconify width={22} icon="socials:google" />}
+        >
+        
+        Login with Gmail
+      </Button>
+      
+        {/* <IconButton color="inherit">
           <Iconify width={22} icon="socials:google" />
         </IconButton>
         <IconButton color="inherit">
@@ -129,7 +143,7 @@ export function SignInView() {
         </IconButton>
         <IconButton color="inherit">
           <Iconify width={22} icon="socials:twitter" />
-        </IconButton>
+        </IconButton> */}
       </Box>
     </>
   );
