@@ -7,7 +7,7 @@ import App from './app';
 import { store } from './rtk/store'
 import { routesSection } from './routes/sections';
 import { ErrorBoundary } from './routes/components';
-import { fetchUsers } from './rtk/features/usersSlice'
+// import { fetchUsers } from './rtk/features/user/usersSlice'
 
 // ----------------------------------------------------------------------
 
@@ -23,8 +23,8 @@ const router = createBrowserRouter([
   },
 ]);
 
+
 const root = createRoot(document.getElementById('root')!);
-store.dispatch(fetchUsers())
 
 root.render(
   <StrictMode>
