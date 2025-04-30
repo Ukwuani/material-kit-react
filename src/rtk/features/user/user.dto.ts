@@ -1,0 +1,15 @@
+
+export interface User {
+    id: string
+    name: string
+    username?: string
+    email: string
+    phone: string
+    isEmailVerified: boolean
+    avatarUrl: "/assets/images/avatar/avatar-1.webp"
+    status?: string,
+    role: string
+    createdAt: string
+    defaultLocation: any
+  }
+  
