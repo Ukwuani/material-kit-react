@@ -1,3 +1,4 @@
+import { User } from 'src/rtk/features/user/user.dto';
 import type { UserProps } from './user-table-row';
 
 // ----------------------------------------------------------------------
@@ -53,12 +54,14 @@ export function getComparator<Key extends keyof any>(
 // ----------------------------------------------------------------------
 
 type ApplyFilterProps = {
-  inputData: UserProps[];
+  inputData?: User[];
   filterName: string;
   comparator: (a: any, b: any) => number;
 };
 
 export function applyFilter({ inputData, comparator, filterName }: ApplyFilterProps) {
+  if (!inputData) return []
+
   const stabilizedThis = inputData.map((el, index) => [el, index] as const);
 
   stabilizedThis.sort((a, b) => {

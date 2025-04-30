@@ -12,7 +12,7 @@ import TablePagination from '@mui/material/TablePagination';
 import { _users } from 'src/_mock';
 import { useAppSelector } from 'src/rtk/hooks';
 import { DashboardContent } from 'src/layouts/dashboard';
-import { selectAllUsers } from 'src/rtk/features/usersSlice';
+import { selectAllUsers } from 'src/rtk/features/user/usersSlice';
 
 import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
@@ -25,6 +25,8 @@ import { UserTableToolbar } from '../user-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
 
 import type { UserProps } from '../user-table-row';
+import { useGetAllUsersQuery } from 'src/rtk/features/user/user.api';
+import { User } from 'src/rtk/features/user/user.dto';
 
 // ----------------------------------------------------------------------
 
@@ -33,10 +35,11 @@ export function UserView() {
 
   const [filterName, setFilterName] = useState('');
 
-  const users = useAppSelector(selectAllUsers)
+  const { data: users, isLoading } = useGetAllUsersQuery()
 
-  const dataFiltered: UserProps[] = applyFilter({
-    inputData: users,
+
+  const dataFiltered: User[] = applyFilter({
+    inputData: users?.data,
     comparator: getComparator(table.order, table.orderBy),
     filterName,
   });
@@ -80,13 +83,13 @@ export function UserView() {
               <UserTableHead
                 order={table.order}
                 orderBy={table.orderBy}
-                rowCount={users.length}
+                rowCount={users?.data.length ?? 0}
                 numSelected={table.selected.length}
                 onSort={table.onSort}
                 onSelectAllRows={(checked) =>
                   table.onSelectAllRows(
                     checked,
-                    users.map((user) => user.id)
+                    users?.data.map((user) => user.id) ?? []
                   )
                 }
                 headLabel={[
@@ -99,7 +102,7 @@ export function UserView() {
                 ]}
               />
               <TableBody>
-                {dataFiltered
+                {(dataFiltered?? [])
                   .slice(
                     table.page * table.rowsPerPage,
                     table.page * table.rowsPerPage + table.rowsPerPage
