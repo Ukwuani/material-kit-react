@@ -1,15 +1,16 @@
 import type { Action, ThunkAction } from "@reduxjs/toolkit"
 
-import { configureStore, createAsyncThunk } from "@reduxjs/toolkit"
+import { combineSlices, configureStore, createAsyncThunk } from "@reduxjs/toolkit"
 
 import { apiSlice } from './features/apiSlice'
-import userReducer from "./features/usersSlice"
+import userSlice from "./features/user/usersSlice"
 
+const rootReducer = combineSlices( apiSlice, userSlice);
 
 export const store = configureStore({
-  reducer: {
-    users: userReducer,
-    [apiSlice.reducerPath]: apiSlice.reducer,
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware().concat(apiSlice.middleware as any);
   },
 })
 
@@ -21,11 +22,3 @@ export type AppDispatch = typeof store.dispatch
 export type RootState = ReturnType<typeof store.getState>
 // Export a reusable type for handwritten thunks
 export type AppThunk = ThunkAction<void, RootState, unknown, Action>
-
-
-
-
-export const createAppAsyncThunk = createAsyncThunk.withTypes<{
-  state: RootState
-  dispatch: AppDispatch
-}>()

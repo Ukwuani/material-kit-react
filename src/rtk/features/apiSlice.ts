@@ -8,14 +8,14 @@ import { baseurl } from '../api.constants';
 // Create our baseQuery instance
 const baseQuery = fetchBaseQuery({
     baseUrl: baseurl, //!::anti-pattern: no env file setup yet
-    prepareHeaders: (headers, { getState }) => {
-      // By default, if we have a token in the store, let's use that for authenticated requests
-    //   const token = (getState() as RootState).users.token;
-    //   if (token) {
-    //     headers.set("Authorization", `Bearer ${token}`);  
-    //   }
-    //   return headers;
-    },
+    // prepareHeaders: (headers, { getState }) => {
+    //   // By default, if we have a token in the store, let's use that for authenticated requests
+    // //   const token = (getState() as RootState).users.token;
+    // //   if (token) {
+    // //     headers.set("Authorization", `Bearer ${token}`);  
+    // //   }
+    // //   return headers;
+    // },
   });
 
 const baseQueryWithRetry = retry(baseQuery, { maxRetries: 6 });
@@ -24,9 +24,10 @@ const baseQueryWithRetry = retry(baseQuery, { maxRetries: 6 });
 export const apiSlice = createApi({
   // The cache reducer expects to be added at `state.api` (already default - this is optional)
   reducerPath: 'api',
-  // All of our requests will have URLs starting with '/fakeApi'
   baseQuery: baseQueryWithRetry,
+  tagTypes: ["user", "orders", "store"],
   endpoints: () =>({})
+
 })
 
 // Export the auto-generated hook for the `getPosts` query endpoint
