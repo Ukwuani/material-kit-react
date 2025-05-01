@@ -6,7 +6,7 @@ export interface User {
     email: string
     phone: string
     isEmailVerified: boolean
-    avatarUrl: "/assets/images/avatar/avatar-1.webp"
+    avatarUrl: "/assets/images/avatar/avatar-2.webp"
     status?: string,
     role: string
     createdAt: string

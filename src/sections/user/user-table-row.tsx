@@ -15,14 +15,15 @@ import { Iconify } from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
-export type UserProps = {
+export type UserProps= {
   id: string;
   name: string;
   role: string;
-  status?: string;
-  company?: string;
+  email?: string;
+  phone?: string;
   avatarUrl: string;
-  isVerified?: boolean;
+  createdAt: string;
+  isEmailVerified?: boolean;
 };
 
 type UserTableRowProps = {
@@ -62,12 +63,12 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
           </Box>
         </TableCell>
 
-        <TableCell>{row.company}</TableCell>
+        <TableCell>{row.email}</TableCell>
 
         <TableCell>{row.role}</TableCell>
 
         <TableCell align="center">
-          {row.isVerified ? (
+          {row.isEmailVerified ? (
             <Iconify width={22} icon="solar:check-circle-bold" sx={{ color: 'success.main' }} />
           ) : (
             '-'
@@ -75,7 +76,11 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
         </TableCell>
 
         <TableCell>
-          <Label color={(row.status === 'banned' && 'error') || 'success'}>{row.status}</Label>
+          <Label color='success'>{row.phone}</Label>
+        </TableCell>
+
+        <TableCell>
+          <Label color='success'>{String(new Date(row.createdAt)?.toLocaleDateString())}</Label>
         </TableCell>
 
         <TableCell align="right">
