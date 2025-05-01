@@ -1,3 +1,5 @@
+import type { User } from 'src/rtk/features/user/user.dto';
+
 import { useState, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
@@ -10,9 +12,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
 import { _users } from 'src/_mock';
-import { useAppSelector } from 'src/rtk/hooks';
 import { DashboardContent } from 'src/layouts/dashboard';
-import { selectAllUsers } from 'src/rtk/features/user/usersSlice';
+import { useGetAllUsersQuery } from 'src/rtk/features/user/user.api';
 
 import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
@@ -23,10 +24,6 @@ import { UserTableHead } from '../user-table-head';
 import { TableEmptyRows } from '../table-empty-rows';
 import { UserTableToolbar } from '../user-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
-
-import type { UserProps } from '../user-table-row';
-import { useGetAllUsersQuery } from 'src/rtk/features/user/user.api';
-import { User } from 'src/rtk/features/user/user.dto';
 
 // ----------------------------------------------------------------------
 

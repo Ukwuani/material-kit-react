@@ -1,6 +1,6 @@
 import type { Action, ThunkAction } from "@reduxjs/toolkit"
 
-import { combineSlices, configureStore, createAsyncThunk } from "@reduxjs/toolkit"
+import { combineSlices, configureStore } from "@reduxjs/toolkit"
 
 import { apiSlice } from './features/apiSlice'
 import userSlice from "./features/user/usersSlice"
@@ -9,9 +9,7 @@ const rootReducer = combineSlices( apiSlice, userSlice);
 
 export const store = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) => {
-    return getDefaultMiddleware().concat(apiSlice.middleware as any);
-  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware as any),
 })
 
 // Infer the type of `store`

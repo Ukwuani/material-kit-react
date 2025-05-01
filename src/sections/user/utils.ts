@@ -1,5 +1,5 @@
-import { User } from 'src/rtk/features/user/user.dto';
-import type { UserProps } from './user-table-row';
+import type { User } from 'src/rtk/features/user/user.dto';
+
 
 // ----------------------------------------------------------------------
 
