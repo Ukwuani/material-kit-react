@@ -2,9 +2,10 @@ const API = {
     LOGIN: "/user/loginOrSignup",
     SIGNUP: "/user/signup",
     FETCH_USERS: "/api/users/all",
-    CHAT_CONVERSATIONS: "/chat/conversations",
-    CHAT_MESSAGES: (conversationId: string) => `/chat/${conversationId}/messages`,
-    CHAT_REACTION: (messageId: string) => `/chat/message/${messageId}/react`,
+    FETCH_ORDERS: "/api/orders/all",
+    FETCH_PRODUCTS: "/api/products/all",
+    FETCH_LOCKERS: "/api/lockers/all",
+
 }
 
 
