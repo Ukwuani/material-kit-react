@@ -1,11 +1,8 @@
-import { createSlice, createEntityAdapter } from '@reduxjs/toolkit'
+import { createEntityAdapter } from '@reduxjs/toolkit'
 
-import API from '../../api.constants'
-import { client } from '../../api.response'
 import { createAppSlice } from '../../hooks'
 
-import type { RootState } from '../../store'
-import { User } from './user.dto'
+import type { User } from './user.dto'
 
 // export const fetchUsers = createAppAsyncThunk('users/fetchUsers', async () => {
 //   const response = await client.get<User[]>(API.FETCH_USERS)

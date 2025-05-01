@@ -1,6 +1,8 @@
 import API from "src/rtk/api.constants";
+
 import { apiSlice } from "../apiSlice";
-import { User } from "./user.dto";
+
+import type { User } from "./user.dto";
 
 
 
