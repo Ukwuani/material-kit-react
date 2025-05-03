@@ -2,7 +2,7 @@ import type { Breakpoint } from '@mui/material/styles';
 
 import React from 'react';
 import { merge } from 'es-toolkit';
-import { useBoolean } from 'minimal-shared/hooks';
+import { useBoolean, useCookies } from 'minimal-shared/hooks';
 
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
@@ -10,7 +10,7 @@ import LinkTab from '@mui/material/Tab';
 import Alert from '@mui/material/Alert';
 import { useTheme } from '@mui/material/styles';
 
-import { usePathname } from 'src/routes/hooks';
+import { usePathname, useRouter } from 'src/routes/hooks';
 
 import { _langs, _notifications } from 'src/_mock';
 
@@ -33,6 +33,8 @@ import { NotificationsPopover } from '../components/notifications-popover';
 import type { MainSectionProps } from '../core/main-section';
 import type { HeaderSectionProps } from '../core/header-section';
 import type { LayoutSectionProps } from '../core/layout-section';
+import { Navigate } from 'react-router-dom';
+import { report } from 'process';
 
 // ----------------------------------------------------------------------
 
@@ -53,6 +55,15 @@ export function DashboardLayout({
   slotProps,
   layoutQuery = 'lg',
 }: DashboardLayoutProps) {
+  const router = useRouter();
+  //  Manage user authentication
+  const { state: userAuth} = useCookies('auth', { access_token: '', user: {}});
+
+
+  if (userAuth?.access_token?.length < 0) {
+    // user is not authenticated
+    router.replace("/sign-in")
+  }
   const theme = useTheme();
 
   const { value: open, onFalse: onClose, onTrue: onOpen } = useBoolean();
