@@ -15,6 +15,7 @@ import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
 import { useRouter, usePathname } from 'src/routes/hooks';
 
 import { _myAccount } from 'src/_mock';
+import { useCookies } from 'minimal-shared/hooks';
 
 // ----------------------------------------------------------------------
 
@@ -29,6 +30,7 @@ export type AccountPopoverProps = IconButtonProps & {
 
 export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps) {
   const router = useRouter();
+  const { resetState: resetAuthSession} = useCookies('auth', { access_token: '',  user: {}});
 
   const pathname = usePathname();
 
@@ -129,7 +131,13 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
         <Divider sx={{ borderStyle: 'dashed' }} />
 
         <Box sx={{ p: 1 }}>
-          <Button fullWidth color="error" size="medium" variant="text">
+          <Button fullWidth color="error" size="medium" variant="text"
+            onClick={() => { 
+              resetAuthSession()
+              router.replace('/sign-in')
+            }
+          }
+          >
             Logout
           </Button>
         </Box>
