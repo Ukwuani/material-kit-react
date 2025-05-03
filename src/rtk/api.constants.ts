@@ -1,5 +1,5 @@
 const API = {
-    LOGIN: "/user/loginOrSignup",
+    LOGIN: "/api/auth/login",
     SIGNUP: "/user/signup",
     FETCH_USERS: "/api/users/all",
     FETCH_ORDERS: "/api/orders/all",
@@ -8,6 +8,11 @@ const API = {
 
 }
 
+
+
+export interface QueryDto {
+    query: any
+  }
 
 
 export const baseurl =  "https://pub-backend-monolith.65s99x2x1kax4.us-west-2.cs.amazonlightsail.com"
