@@ -128,10 +128,12 @@ export function UserView() {
         <TablePagination
           component="div"
           page={table.page}
-          count={_users.length}
+          count={(users?.data ?? []).length}
           rowsPerPage={table.rowsPerPage}
           onPageChange={table.onChangePage}
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={Array.from({length: (users?.data ?? []).length / 5 + 1},
+          (val, id) => 5+ id * 5
+        )}
           onRowsPerPageChange={table.onChangeRowsPerPage}
         />
       </Card>

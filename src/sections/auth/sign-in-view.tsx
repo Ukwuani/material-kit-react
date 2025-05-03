@@ -12,17 +12,44 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { useRouter } from 'src/routes/hooks';
 
 import { Iconify } from 'src/components/iconify';
+import { useLoginMutation } from 'src/rtk/features/user/user.api';
+import { useCookies } from 'minimal-shared/hooks';
+import { Alert, Collapse } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
 export function SignInView() {
   const router = useRouter();
+  
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
-  const handleSignIn = useCallback(() => {
-    router.push('/');
-  }, [router]);
+  const [ login,  {isLoading}] = useLoginMutation()
+
+  const { setState: setAuthSession} = useCookies('auth', { access_token: '',  user: {}});
+
+  const handlePassword = (event: any) => {
+    setPassword(event.target.value)
+  }
+
+  const handleSignIn = async () => {
+    try {
+      setErrorMsg('')
+      const payload = await login({email, password}).unwrap();
+      if (payload.data.user?.role != "admin") {
+        throw Error(" Wrong credentials ")
+      }
+
+      setAuthSession(payload.data)
+      router.push('/');
+    } catch (error) {
+      setErrorMsg("Issue loginning in, please check your credentials")
+      console.log('rejectedk', error);
+    }
+  };
 
   const renderForm = (
     <Box
@@ -32,12 +59,34 @@ export function SignInView() {
         flexDirection: 'column',
       }}
     >
+     <Collapse in={Boolean(errorMsg)}>
+          <Alert severity="error"
+            action={
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                size="small"
+                onClick={() => {
+                  setErrorMsg('');
+                }}
+              >
+                {/* <CloseIcon fontSize="inherit" /> */}
+              </IconButton>
+            }
+          >
+            {errorMsg}
+          </Alert>
+      </Collapse>
+      
+
       <TextField
         fullWidth
         name="email"
         label="Email address"
         defaultValue=""
-        sx={{ mb: 3 }}
+        value={email}
+        onChange={event => setEmail(event.target.value)}
+        sx={{ my: 3 }}
         slotProps={{
           inputLabel: { shrink: true },
         }}
@@ -46,12 +95,13 @@ export function SignInView() {
       <Link variant="body2" color="inherit" sx={{ mb: 1.5 }}>
         Forgot password?
       </Link>
-
       <TextField
         fullWidth
         name="password"
         label="Password"
         defaultValue=""
+        value={password}
+        onChange={handlePassword}
         type={showPassword ? 'text' : 'password'}
         slotProps={{
           inputLabel: { shrink: true },
@@ -74,6 +124,7 @@ export function SignInView() {
         type="submit"
         color="inherit"
         variant="contained"
+        disabled= {Boolean(!email && !password)}
         onClick={handleSignIn}
       >
         Sign in
@@ -99,10 +150,8 @@ export function SignInView() {
             color: 'text.secondary',
           }}
         >
-          Don’t have an account?
-          <Link variant="subtitle2" sx={{ ml: 0.5 }}>
-            Get started
-          </Link>
+          Get in here and control things
+          
         </Typography>
       </Box>
       {renderForm}
@@ -122,16 +171,15 @@ export function SignInView() {
         }}
       >
         <Button
-        fullWidth
-        size="large"
-        color="grey"
-        type="submit"
-        variant="outlined"
-        onClick={handleSignIn}
-        tabIndex={-1}
-        startIcon={<Iconify width={22} icon="socials:google" />}
+          fullWidth
+          size="large"
+          color="grey"
+          type="submit"
+          variant="outlined"
+          onClick={handleSignIn}
+          tabIndex={-1}
+          startIcon={<Iconify width={22} icon="socials:google" />}
         >
-        
         Login with Gmail
       </Button>
       
