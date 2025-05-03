@@ -1,14 +1,14 @@
-import API from "src/rtk/api.constants";
+import API, { QueryDto } from "src/rtk/api.constants";
 
 import { apiSlice } from "../apiSlice";
 
-import type { User } from "./user.dto";
+import type { LoginRequest, LoginResponse, User } from "./user.dto";
 
 
 
 export const userApiSlice = apiSlice.injectEndpoints({
     endpoints: (build) => ({
-        login: build.mutation<any, Partial<User>>({
+        login: build.mutation<{data: Partial<LoginResponse>}, LoginRequest>({
             query(body) {
               return {
                 url: API.LOGIN,
@@ -19,7 +19,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
             extraOptions: {
               maxRetries: 1,
             },
-            invalidatesTags: ['user'],
+            // invalidatesTags: ['auth'],
           }),
           getAllUsers: build.query<{data:  User[] }, void>({
             query() {

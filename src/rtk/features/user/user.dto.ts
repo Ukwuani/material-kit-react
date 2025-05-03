@@ -13,3 +13,14 @@ export interface User {
     defaultLocation: any
   }
   
+
+  export interface LoginResponse {
+    access_token: string
+    user: Partial<User>
+  }
+  
+  export interface LoginRequest {
+    email: string
+    password: string
+  }
+  
