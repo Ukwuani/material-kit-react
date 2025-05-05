@@ -10,20 +10,18 @@ import LinkTab from '@mui/material/Tab';
 import Alert from '@mui/material/Alert';
 import { useTheme } from '@mui/material/styles';
 
-import { usePathname, useRouter } from 'src/routes/hooks';
+import { useRouter, usePathname } from 'src/routes/hooks';
 
 import { _langs, _notifications } from 'src/_mock';
 
 import { Logo } from 'src/components/logo';
 
-import { NavDesktop } from './nav';
 import { layoutClasses } from '../core/classes';
 import { _account } from '../nav-config-account';
 import { dashboardLayoutVars } from './css-vars';
 import { navData } from '../nav-config-dashboard';
 import { MainSection } from '../core/main-section';
 import { Searchbar } from '../components/searchbar';
-import { _workspaces } from '../nav-config-workspace';
 import { HeaderSection } from '../core/header-section';
 import { LayoutSection } from '../core/layout-section';
 import { AccountPopover } from '../components/account-popover';
@@ -33,8 +31,6 @@ import { NotificationsPopover } from '../components/notifications-popover';
 import type { MainSectionProps } from '../core/main-section';
 import type { HeaderSectionProps } from '../core/header-section';
 import type { LayoutSectionProps } from '../core/layout-section';
-import { Navigate } from 'react-router-dom';
-import { report } from 'process';
 
 // ----------------------------------------------------------------------
 

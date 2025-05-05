@@ -1,11 +1,9 @@
 
+import { getCookie } from 'minimal-shared/utils';
 // Import the RTK Query methods from the React-specific entry point
 import { retry, createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 import { baseurl } from '../api.constants';
-import { RootState } from '../store';
-import { useCookies } from 'minimal-shared/hooks';
-import { getCookie } from 'minimal-shared/utils';
 
 
 
