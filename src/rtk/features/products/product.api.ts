@@ -8,19 +8,6 @@ import type { Product } from "./product.dto";
 
 export const userApiSlice = apiSlice.injectEndpoints({
     endpoints: (build) => ({
-        login: build.mutation<any, Partial<Product>>({
-            query(body) {
-              return {
-                url: API.LOGIN,
-                method: 'POST',
-                body,
-              }
-            },
-            extraOptions: {
-              maxRetries: 1,
-            },
-            invalidatesTags: ['user'],
-          }),
           getAllProducts: build.query<{data:  Product[] }, void>({
             query() {
               return {
@@ -42,4 +29,4 @@ export const userApiSlice = apiSlice.injectEndpoints({
 })
 
 
-export const { useLoginMutation, useGetAllProductsQuery } = userApiSlice;
+export const { useGetAllProductsQuery } = userApiSlice;
