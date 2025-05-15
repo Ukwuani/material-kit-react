@@ -4,7 +4,7 @@ import { getCookie } from 'minimal-shared/utils';
 import { retry, createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 import { baseurl } from '../api.constants';
-
+import { ServerResponse } from 'http';
 
 
 // Create our baseQuery instance
@@ -21,6 +21,13 @@ const baseQuery = fetchBaseQuery({
       }
       return headers;
     },
+    validateStatus: (res: any, body: any) => {
+      if (res.status == 401) {
+          window.location.href = "/sign-in"
+          return false
+      }
+      return true 
+    }
   });
 
 const baseQueryWithRetry = retry(baseQuery, { maxRetries: 6 });
