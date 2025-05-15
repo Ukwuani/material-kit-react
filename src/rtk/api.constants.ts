@@ -3,7 +3,7 @@ const API = {
     SIGNUP: "/user/signup",
     FETCH_USERS: "/api/users/all",
     FETCH_ORDERS: "/api/orders/all",
-    FETCH_PRODUCTS: "/api/products/all",
+    FETCH_PRODUCTS: "/api/products/filter",
     FETCH_LOCKERS: "/api/lockers/all",
 
 }
