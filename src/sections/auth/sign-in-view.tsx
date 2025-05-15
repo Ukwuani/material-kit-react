@@ -84,7 +84,6 @@ export function SignInView() {
         fullWidth
         name="email"
         label="Email address"
-        defaultValue=""
         value={email}
         onChange={event => setEmail(event.target.value)}
         sx={{ my: 3 }}
@@ -100,7 +99,6 @@ export function SignInView() {
         fullWidth
         name="password"
         label="Password"
-        defaultValue=""
         value={password}
         onChange={handlePassword}
         type={showPassword ? 'text' : 'password'}
