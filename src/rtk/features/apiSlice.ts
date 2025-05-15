@@ -4,7 +4,6 @@ import { getCookie } from 'minimal-shared/utils';
 import { retry, createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 import { baseurl } from '../api.constants';
-import { ServerResponse } from 'http';
 
 
 // Create our baseQuery instance
