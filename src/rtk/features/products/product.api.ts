@@ -15,15 +15,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
               }
             },
             providesTags: ["user"]
-          }),
-          // getMessages: build.query<{ data: IConversation }, string>({
-          //   query(conversationId) {
-          //     return {
-          //       url: API.CHAT_MESSAGES(conversationId),
-          //     }
-          //   },
-          //   providesTags: ["message"]
-          // }),
+          })
           
     })
 })
