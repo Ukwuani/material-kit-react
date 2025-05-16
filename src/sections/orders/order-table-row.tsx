@@ -12,26 +12,28 @@ import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
 
 import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
+import { Order } from 'src/rtk/features/orders/order.dto';
 
 // ----------------------------------------------------------------------
 
-export type OrderProps = {
-  id: string;
-  name: string;
-  role: string;
-  status: string;
-  company: string;
-  avatarUrl: string;
-  isVerified: boolean;
-};
+// export type OrderProps = {
+//   id: string;
+//   name: string;
+//   role: string;
+//   status: string;
+//   company: string;
+//   avatarUrl: string;
+//   isVerified: boolean;
+// };
 
 type OrderTableRowProps = {
-  row: OrderProps;
+  row: Order;
   selected: boolean;
   onSelectRow: () => void;
 };
 
 export function OrderTableRow({ row, selected, onSelectRow }: OrderTableRowProps) {
+  
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
 
   const handleOpenPopover = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
@@ -52,25 +54,42 @@ export function OrderTableRow({ row, selected, onSelectRow }: OrderTableRowProps
         <TableCell component="th" scope="row">
           <Box
             sx={{
-              gap: 2,
+              // gap: 2,
               display: 'flex',
-              alignItems: 'center',
+              flexDirection: 'column',
+              alignItems: 'left',
             }}
           >
-            <Avatar alt={row.name} src={row.avatarUrl} />
-            {row.name}
+            {/* <Avatar alt={row.name} src={row.avatarUrl} /> */}
+            <span>{row.senderName}</span>
+            <span>{row.senderEmail}</span>
+            <span>{row.senderPhone}</span>
           </Box>
         </TableCell>
 
-        <TableCell>{row.company}</TableCell>
+        <TableCell>
+        <Box
+            sx={{
+              // gap: 2,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'left',
+            }}
+          >
+            {/* <Avatar alt={row.name} src={row.avatarUrl} /> */}
+            <span>{row.receiverName}</span>
+            <span>{row.receiverEmail}</span>
+            <span>{row.receiverPhone}</span>
+          </Box>
+          </TableCell>
 
-        <TableCell>{row.role}</TableCell>
+        <TableCell>{row.trackingId}</TableCell>
 
         <TableCell align="center">
-          {row.isVerified ? (
+          {row.insurancePackage ? (
             <Iconify width={22} icon="solar:check-circle-bold" sx={{ color: 'success.main' }} />
           ) : (
-            '-'
+            <Iconify width={22} icon="solar:check-circle-bold" sx={{ color: 'error.main' }} />
           )}
         </TableCell>
 
