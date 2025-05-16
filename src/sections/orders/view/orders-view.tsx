@@ -11,6 +11,8 @@ import TablePagination from '@mui/material/TablePagination';
 
 import { _users } from 'src/_mock';
 import { DashboardContent } from 'src/layouts/dashboard';
+import { Order } from 'src/rtk/features/orders/order.dto';
+import { useGetAllOrdersQuery } from 'src/rtk/features/orders/order.api';
 
 import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
@@ -22,7 +24,7 @@ import { TableEmptyRows } from '../table-empty-rows';
 import { OrderTableToolbar } from '../order-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
 
-import type { OrderProps } from '../order-table-row';
+
 
 // ----------------------------------------------------------------------
 
@@ -31,8 +33,11 @@ export function OrderView() {
 
   const [filterName, setFilterName] = useState('');
 
-  const dataFiltered: OrderProps[] = applyFilter({
-    inputData: _users,
+  const { data: orders, isLoading } = useGetAllOrdersQuery()
+  
+
+  const dataFiltered: Order[] = applyFilter({
+    inputData: orders?.data,
     comparator: getComparator(table.order, table.orderBy),
     filterName,
   });
@@ -49,14 +54,14 @@ export function OrderView() {
         }}
       >
         <Typography variant="h4" sx={{ flexGrow: 1 }}>
-          Users
+          Orders
         </Typography>
         <Button
           variant="contained"
           color="inherit"
           startIcon={<Iconify icon="mingcute:add-line" />}
         >
-          New user
+          Create Order
         </Button>
       </Box>
 
@@ -86,10 +91,10 @@ export function OrderView() {
                   )
                 }
                 headLabel={[
-                  { id: 'name', label: 'Name' },
-                  { id: 'company', label: 'Company' },
-                  { id: 'role', label: 'Role' },
-                  { id: 'isVerified', label: 'Verified', align: 'center' },
+                  { id: 'sender', label: 'Sender' },
+                  { id: 'receiver', label: 'Receiver' },
+                  { id: 'trackingId', label: 'Tracking Id' },
+                  { id: 'insured', label: 'Insured', align: 'center' },
                   { id: 'status', label: 'Status' },
                   { id: '' },
                 ]}
@@ -123,12 +128,15 @@ export function OrderView() {
         <TablePagination
           component="div"
           page={table.page}
-          count={_users.length}
+          count={(orders?.data ?? []).length}
           rowsPerPage={table.rowsPerPage}
           onPageChange={table.onChangePage}
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={Array.from({length: (orders?.data ?? []).length / 5 + 1},
+          (val, id) => 5+ id * 5
+        )}
           onRowsPerPageChange={table.onChangeRowsPerPage}
         />
+        
       </Card>
     </DashboardContent>
   );
