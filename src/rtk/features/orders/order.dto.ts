@@ -1,15 +1,34 @@
 
-export interface User {
+export interface Location {
+  id: string
+  address: string
+  geom: any
+  createdAt: string
+}
+
+export interface Locker {
+  id: string
+  lockerCode: string
+  isAvailable: string
+  location?: Location
+  createdAt: string
+}
+
+
+export interface Order {
     id: string
-    name: string
-    username?: string
-    email: string
-    phone: string
-    isEmailVerified: boolean
-    avatarUrl: "/assets/images/avatar/avatar-1.webp"
-    status?: string,
-    role: string
+    senderName: string
+    senderEmail: string
+    senderPhone: string
+    receiverName: string
+    receiverEmail: boolean
+    receiverPhone	: string
+    insurancePackage: boolean
+    totalCost?: number,
+    status: string
     createdAt: string
-    defaultLocation: any
+    trackingId: string
+    pickupLocker: Locker
+    destinationLocker: Locker
   }
   
