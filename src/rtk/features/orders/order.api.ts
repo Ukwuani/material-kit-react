@@ -2,44 +2,23 @@ import API from "src/rtk/api.constants";
 
 import { apiSlice } from "../apiSlice";
 
-import type { User } from "./order.dto";
+import type { Order } from "./order.dto";
 
 
 
-export const userApiSlice = apiSlice.injectEndpoints({
+export const orderApiSlice = apiSlice.injectEndpoints({
     endpoints: (build) => ({
-        login: build.mutation<any, Partial<User>>({
-            query(body) {
-              return {
-                url: API.LOGIN,
-                method: 'POST',
-                body,
-              }
-            },
-            extraOptions: {
-              maxRetries: 1,
-            },
-            invalidatesTags: ['user'],
-          }),
-          getAllUsers: build.query<{data:  User[] }, void>({
+          getAllOrders: build.query<{data:  Order[] }, void>({
             query() {
               return {
-                url: API.FETCH_USERS,
+                url: API.FETCH_ORDERS,
               }
             },
-            providesTags: ["user"]
-          }),
-          // getMessages: build.query<{ data: IConversation }, string>({
-          //   query(conversationId) {
-          //     return {
-          //       url: API.CHAT_MESSAGES(conversationId),
-          //     }
-          //   },
-          //   providesTags: ["message"]
-          // }),
+            providesTags: ["orders"]
+          })
           
     })
 })
 
 
-export const { useLoginMutation, useGetAllUsersQuery, useLazyGetAllUsersQuery } = userApiSlice;
+export const { useGetAllOrdersQuery } = orderApiSlice;
