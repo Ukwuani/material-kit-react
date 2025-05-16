@@ -6,7 +6,6 @@ export interface Product {
   size:	string
   price:	number
   weight:	any
-  image:	string
   createdAt:	string
   updatedAt:	string
   totalUnitsSold: number
@@ -20,5 +19,6 @@ export interface Product {
   availableSizes: Array<string>
   imageUrl: string
   imagePublicId: string
+  status: 'sale'
 }
   
