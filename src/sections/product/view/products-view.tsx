@@ -14,6 +14,7 @@ import { CartIcon } from '../product-cart-widget';
 import { ProductFilters } from '../product-filters';
 
 import type { FiltersProps } from '../product-filters';
+import { useGetAllProductsQuery } from 'src/rtk/features/products/product.api';
 
 // ----------------------------------------------------------------------
 
@@ -64,6 +65,9 @@ export function ProductsView() {
 
   const [filters, setFilters] = useState<FiltersProps>(defaultFilters);
 
+  const { data: products, isLoading } = useGetAllProductsQuery()
+  
+
   const handleOpenFilter = useCallback(() => {
     setOpenFilter(true);
   }, []);
@@ -89,7 +93,7 @@ export function ProductsView() {
       <CartIcon totalItems={8} />
 
       <Typography variant="h4" sx={{ mb: 5 }}>
-        Products
+        Shop
       </Typography>
       <Box
         sx={{
@@ -139,14 +143,14 @@ export function ProductsView() {
       </Box>
 
       <Grid container spacing={3}>
-        {_products.map((product) => (
+        {products?.data?.map((product) => (
           <Grid key={product.id} size={{ xs: 12, sm: 6, md: 3 }}>
             <ProductItem product={product} />
           </Grid>
         ))}
       </Grid>
 
-      <Pagination count={10} color="primary" sx={{ mt: 8, mx: 'auto' }} />
+      <Pagination count={(products?.data?.length ?? 0) / 10} color="primary" sx={{ mt: 8, mx: 'auto' }} />
     </DashboardContent>
   );
 }

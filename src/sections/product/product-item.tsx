@@ -8,6 +8,7 @@ import { fCurrency } from 'src/utils/format-number';
 
 import { Label } from 'src/components/label';
 import { ColorPreview } from 'src/components/color-utils';
+import { Product } from 'src/rtk/features/products/product.dto';
 
 // ----------------------------------------------------------------------
 
@@ -21,7 +22,7 @@ export type ProductItemProps = {
   priceSale: number | null;
 };
 
-export function ProductItem({ product }: { product: ProductItemProps }) {
+export function ProductItem({ product }: { product: Product }) {
   const renderStatus = (
     <Label
       variant="inverted"
@@ -42,7 +43,7 @@ export function ProductItem({ product }: { product: ProductItemProps }) {
     <Box
       component="img"
       alt={product.name}
-      src={product.coverUrl}
+      src={product.imageUrl ? product.imageUrl : '/assets/images/cover/cover-19.webp'}
       sx={{
         top: 0,
         width: 1,
@@ -63,7 +64,7 @@ export function ProductItem({ product }: { product: ProductItemProps }) {
           textDecoration: 'line-through',
         }}
       >
-        {product.priceSale && fCurrency(product.priceSale)}
+        {product.price && fCurrency(product.price)}
       </Typography>
       &nbsp;
       {fCurrency(product.price)}
@@ -89,7 +90,7 @@ export function ProductItem({ product }: { product: ProductItemProps }) {
             justifyContent: 'space-between',
           }}
         >
-          <ColorPreview colors={product.colors} />
+          <ColorPreview colors={[product.color]} />
           {renderPrice}
         </Box>
       </Stack>
