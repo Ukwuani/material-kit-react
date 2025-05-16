@@ -2,14 +2,14 @@ import { createEntityAdapter } from '@reduxjs/toolkit'
 
 import { createAppSlice } from '../../hooks'
 
-import type { User } from './order.dto'
+import type { Order } from './order.dto'
 
 // export const fetchUsers = createAppAsyncThunk('users/fetchUsers', async () => {
 //   const response = await client.get<User[]>(API.FETCH_USERS)
 //   return response.data
 // })
 
-const usersAdapter = createEntityAdapter<User>()
+const usersAdapter = createEntityAdapter<Order>()
 
 const initialState = usersAdapter.getInitialState()
 
