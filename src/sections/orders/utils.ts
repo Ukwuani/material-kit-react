@@ -1,4 +1,6 @@
-import type { OrderProps } from './order-table-row';
+// import type { OrderProps } from './order-table-row';
+
+import { Order } from "src/rtk/features/orders/order.dto";
 
 // ----------------------------------------------------------------------
 
@@ -53,12 +55,13 @@ export function getComparator<Key extends keyof any>(
 // ----------------------------------------------------------------------
 
 type ApplyFilterProps = {
-  inputData: OrderProps[];
+  inputData?: Order[];
   filterName: string;
   comparator: (a: any, b: any) => number;
 };
 
 export function applyFilter({ inputData, comparator, filterName }: ApplyFilterProps) {
+  if (!inputData) return []
   const stabilizedThis = inputData.map((el, index) => [el, index] as const);
 
   stabilizedThis.sort((a, b) => {
@@ -71,7 +74,7 @@ export function applyFilter({ inputData, comparator, filterName }: ApplyFilterPr
 
   if (filterName) {
     inputData = inputData.filter(
-      (user) => user.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+      (order) => order.receiverName.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
     );
   }
 
