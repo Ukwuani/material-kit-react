@@ -15,6 +15,7 @@ import { ProductFilters } from '../product-filters';
 
 import type { FiltersProps } from '../product-filters';
 import { useGetAllProductsQuery } from 'src/rtk/features/products/product.api';
+import { AddProduct } from '../add-product';
 
 // ----------------------------------------------------------------------
 
@@ -61,6 +62,8 @@ const defaultFilters = {
 export function ProductsView() {
   const [sortBy, setSortBy] = useState('featured');
 
+  const [openAddProduct, setOpenAddProduct] = useState(false);
+
   const [openFilter, setOpenFilter] = useState(false);
 
   const [filters, setFilters] = useState<FiltersProps>(defaultFilters);
@@ -90,7 +93,16 @@ export function ProductsView() {
 
   return (
     <DashboardContent>
-      <CartIcon totalItems={8} />
+      {/* <CartIcon totalItems={8} /> */}
+      <AddProduct
+            canReset={canReset}
+            filters={filters}
+            onSetFilters={handleSetFilters}
+            openFilter={openAddProduct}
+            onOpenFilter={() => setOpenAddProduct(true)}
+            onCloseFilter={() => setOpenAddProduct(false)}
+            onResetFilter={() => setFilters(defaultFilters)}
+          />
 
       <Typography variant="h4" sx={{ mb: 5 }}>
         Shop
